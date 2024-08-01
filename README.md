@@ -241,8 +241,10 @@ ruleset(name="testRule"){
 
 input(type="imtcp" port="514" ruleset="testRule")
 ```
+-----
 
 
+# Overall usage of the entire package
 ```python
 import logsrvasst as asst
 # Load properties from JSON file
