@@ -1,4 +1,4 @@
-# Rsyslog Server Side Configuration Generator
+# Rsyslog Server Side Template Generator
 
 ## Overview
 
@@ -199,6 +199,50 @@ print(descriptions_json)
 2. Create a `properties.json` file with the required property codes and descriptions in the same directory as the script.
 3. Run the script using Python.
 
+
+
+# Rsyslog Server Side Ruleset Configuration Generator
+
+This Python function generates a rsyslog ruleset configuration string based on user inputs. It allows customization of the ruleset name, template name, port, protocol, and facility.severity pairs.
+
+## Function Overview
+
+### `create_rsyslog_ruleset(ruleset_name, template_name, port, protocol, facilities_severities)`
+
+Generates a rsyslog configuration string with the specified parameters.
+
+#### Parameters:
+
+- **`ruleset_name`** (`str`): The name of the ruleset.
+- **`template_name`** (`str`): The name of the template to use in the ruleset action.
+- **`port`** (`int`): The port number to listen on.
+- **`protocol`** (`str`): The protocol to use (`imtcp` for TCP or `imudp` for UDP).
+- **`facilities_severities`** (`str`): A comma-separated list of `facility.severity` pairs.
+
+#### Returns:
+
+- **`str`**: The generated rsyslog configuration.
+
+#### Example Usage:
+
+```python
+ rsyslog_config = create_rsyslog_ruleset(ruleset_name, template_name, port, protocol, facilities_severities)
+        print(rsyslog_config)
+```
+
+#### Output Example:
+```plaintext
+Generated rsyslog configuration:
+module(load="imtcp")
+
+ruleset(name="testRule"){
+    mail.info;local3.warn action(type="omfile" DynaFile="testTemplate")
+}
+
+input(type="imtcp" port="514" ruleset="testRule")
+```
+
+
 ```python
 import logsrvasst as asst
 # Load properties from JSON file
@@ -225,6 +269,8 @@ rsyslog_template = asst.generate_template(template_name, file_path, properties)
 # Print the generated template
 print("\nGenerated rsyslog template:")
 print(rsyslog_template)
+# ruleset generator
+rsyslog_ruleset = create_rsyslog_ruleset('testRule', 'exampleTemplate', 514, 'protocol', '*.info,mail.crit')
+print(rsyslog_ruleset)
 ```
-
 #### THANK YOU
