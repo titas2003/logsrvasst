@@ -1,0 +1,16 @@
+[
+    {"code": "hst", "name": "hostname", "description": "The hostname of the machine where the log message was originated."},
+    {"code": "src", "name": "source", "description": "The IP address or hostname of the source of the log message."},
+    {"code": "dat", "name": "date", "description": "The date on which the log message was generated."},
+    {"code": "tim", "name": "time", "description": "The time when the log message was generated."},
+    {"code": "prg", "name": "programname", "description": "The name of the program or process that generated the log message."},
+    {"code": "pid", "name": "pid", "description": "The process ID of the program that generated the log message."},
+    {"code": "msg", "name": "msg", "description": "The actual log message content."},
+    {"code": "slt", "name": "syslogtag", "description": "The syslog tag associated with the log message (usually includes the program name)."},
+    {"code": "fct", "name": "facility", "description": "The syslog facility of the log message (e.g., auth, daemon, kern)."},
+    {"code": "sev", "name": "severity", "description": "The severity level of the log message (e.g., info, warning, error)."},
+    {"code": "hip", "name": "hostip", "description": "The IP address of the host where the log message was generated."},
+    {"code": "tmp", "name": "timestamp", "description": "The timestamp when the log entry was created."},
+    {"code": "fle", "name": "file", "description": "The file name where the log entry was written (typically used in log rotation contexts)."},
+    {"code": "lin", "name": "line", "description": "The line number in the file where the log entry was written (used in some custom configurations)."}
+]
