@@ -1,0 +1,8 @@
+README.md
+setup.py
+logsrvasst/__init__.py
+logsrvasst/logsrvasst.py
+logsrvasst.egg-info/PKG-INFO
+logsrvasst.egg-info/SOURCES.txt
+logsrvasst.egg-info/dependency_links.txt
+logsrvasst.egg-info/top_level.txt
