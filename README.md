@@ -92,7 +92,7 @@ Returns:
 property_name = get_property_name('hst', properties)
 print(property_name)
 ```
-### Output example:
+#### Output example:
 ```plaintext
 hostname
 ```
@@ -111,7 +111,7 @@ Returns:
 components = extract_properties_and_constants('/var/log/src/hst-len/pme.log', properties)
 print(components)
 ```
-### Output Example:
+#### Output Example:
 ```python
 [
     'constant(value="/")',
@@ -147,7 +147,7 @@ template = generate_template('test', '/var/log/src/hst-len/pme.log', properties)
 print(template)
 ```
 
-### Output Example:
+#### Output Example:
 ```plaintext
 template(name="test" type="list") {
     constant(value="/")
@@ -179,7 +179,7 @@ Returns:
 descriptions_json = show_property_descriptions(properties)
 print(descriptions_json)
 ```
-##### Output Example:
+#### Output Example:
 ```json
 [
     {
