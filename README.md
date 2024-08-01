@@ -1,4 +1,4 @@
-# Rsyslog Configuration Generator
+# Rsyslog Server Side Configuration Generator
 
 ## Overview
 
