@@ -1,3 +1,6 @@
+import json
+import re
+
 def logsrvasst(port, protocol):
     """
     Generate an rsyslog server-side configuration file content.
@@ -37,11 +40,6 @@ def print_suggestions(port, protocol):
         print(f"# semanage port -a -t syslogd_port_t -p {protocol} {port}")
         print(f"# firewall-cmd --permanent --add-port={port}/{protocol}")
         print("# firewall-cmd --reload")
-
-
-
-import json
-import re
 
 def load_properties(file_path):
     """Load properties from a JSON file."""
@@ -85,10 +83,22 @@ def generate_template(template_name, file_path, properties):
     template = f'template(name="{template_name}" type="list") {{\n    ' + '\n    '.join(components) + '\n}'
     return template
 
+def show_property_descriptions(properties):
+    """Return the code and description of all properties as JSON data."""
+    # Prepare the data
+    data = [{'code': prop['code'], 'description': prop['description']} for prop in properties]
+    # Convert to JSON
+    return json.dumps(data, indent=4)
+
 def main():
     # Load properties from JSON file
     json_file_path = 'properties.json'
     properties = load_properties(json_file_path)
+    
+    # Show property descriptions
+    property_descriptions_json = show_property_descriptions(properties)
+    print("\nProperty descriptions in JSON format:")
+    print(property_descriptions_json)
     
     # User input
     template_name = input("Enter the template name: ")
