@@ -18,8 +18,8 @@ setup(
     ],
     install_requires=[
         # Add any dependencies here
-        json,
-        re
+        'json',
+        're'
     ],
     include_package_data=True,
 )
