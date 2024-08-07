@@ -11,10 +11,12 @@ This Python script generates rsyslog server-side configuration templates and ass
 Generates an rsyslog server-side configuration file content based on the specified port and protocol.
 
 **Parameters:**
+
 - `port` (int): The port on which the rsyslog server will listen. Commonly, this is 514, but you can specify a different port.
 - `protocol` (str): The protocol used by the server, either `'tcp'` or `'udp'`.
 
 **Returns:**
+
 - `str`: The rsyslog configuration content.
 
 **Example:**
@@ -25,6 +27,7 @@ print(config)
 ```
 
 ### output
+
 ```plaintext
 
 # rsyslog server configuration
@@ -68,6 +71,7 @@ Returns:
 properties = load_properties('properties.json')
 print(properties)
 ```
+
 ```json
 [
     {"code": "hst", "name": "hostname", "description": "The hostname of the machine where the log message was originated."},
@@ -92,10 +96,13 @@ Returns:
 property_name = get_property_name('hst', properties)
 print(property_name)
 ```
-#### Output example:
+
+#### Output example
+
 ```plaintext
 hostname
 ```
+
 `extract_properties_and_constants(file_path, properties)`
 Extracts properties and constants from the given file path. Codes are replaced with the corresponding property names.
 
@@ -111,7 +118,9 @@ Returns:
 components = extract_properties_and_constants('/var/log/src/hst-len/pme.log', properties)
 print(components)
 ```
-#### Output Example:
+
+#### Output Example
+
 ```python
 [
     'constant(value="/")',
@@ -131,7 +140,7 @@ print(components)
 `generate_template(template_name, file_path, properties)`
 Generates an rsyslog template based on the provided name and file path. The file path is parsed to replace codes with property names.
 
-####  Parameters:
+#### Parameters
 
 `template_name` (str): The name of the template.
 
@@ -147,7 +156,8 @@ template = generate_template('test', '/var/log/src/hst-len/pme.log', properties)
 print(template)
 ```
 
-#### Output Example:
+#### Output Examples
+
 ```plaintext
 template(name="test" type="list") {
     constant(value="/")
@@ -167,19 +177,22 @@ template(name="test" type="list") {
 `show_property_descriptions(properties)`
 Returns a JSON-formatted string with property codes and their descriptions.
 
-#### Parameters:
+#### Parameters
 
 `properties` (list): The list of properties.
 
 Returns:
 `str`: A JSON formatted string containing the property codes and descriptions.
 
-##### Usage Example:
+##### Usage Example
+
 ```python
 descriptions_json = show_property_descriptions(properties)
 print(descriptions_json)
 ```
-#### Output Example:
+
+#### Output Example
+
 ```json
 [
     {
@@ -195,13 +208,12 @@ print(descriptions_json)
 ```
 
 ### Usage
+
 1. Ensure that you have `Python 3.x` installed.
 2. Create a `properties.json` file with the required property codes and descriptions in the same directory as the script.
 3. Run the script using Python.
 
-
-
-# Rsyslog Server Side Ruleset Configuration Generator
+## Rsyslog Server Side Ruleset Configuration Generator
 
 This Python function generates a rsyslog ruleset configuration string based on user inputs. It allows customization of the ruleset name, template name, port, protocol, and facility.severity pairs.
 
@@ -211,7 +223,7 @@ This Python function generates a rsyslog ruleset configuration string based on u
 
 Generates a rsyslog configuration string with the specified parameters.
 
-#### Parameters:
+#### Parameters
 
 - **`ruleset_name`** (`str`): The name of the ruleset.
 - **`template_name`** (`str`): The name of the template to use in the ruleset action.
@@ -219,18 +231,19 @@ Generates a rsyslog configuration string with the specified parameters.
 - **`protocol`** (`str`): The protocol to use (`imtcp` for TCP or `imudp` for UDP).
 - **`facilities_severities`** (`str`): A comma-separated list of `facility.severity` pairs.
 
-#### Returns:
+#### Returns
 
 - **`str`**: The generated rsyslog configuration.
 
-#### Example Usage:
+#### Example Usage
 
 ```python
  rsyslog_config = create_rsyslog_ruleset(ruleset_name, template_name, port, protocol, facilities_severities)
         print(rsyslog_config)
 ```
 
-#### Output Example:
+#### Output Example
+
 ```plaintext
 Generated rsyslog configuration:
 module(load="imtcp")
@@ -241,10 +254,11 @@ ruleset(name="testRule"){
 
 input(type="imtcp" port="514" ruleset="testRule")
 ```
+
 -----
 
-
 # Overall usage of the entire package
+
 ```python
 import logsrvasst as asst
 # Load properties from JSON file
@@ -275,4 +289,5 @@ print(rsyslog_template)
 rsyslog_ruleset = create_rsyslog_ruleset('testRule', 'exampleTemplate', 514, 'protocol', '*.info,mail.crit')
 print(rsyslog_ruleset)
 ```
+
 #### THANK YOU

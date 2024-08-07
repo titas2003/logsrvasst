@@ -91,3 +91,43 @@ def show_property_descriptions(properties):
     return json.dumps(data, indent=4)
 
 
+# rulesets
+
+
+def create_rsyslog_ruleset(ruleset_name, template_name, port, protocol, facilities_severities):
+    """
+    Create an rsyslog configuration string based on the provided ruleset name, template name, port, protocol, and facilities/severities.
+    
+    Args:
+        ruleset_name (str): The name of the ruleset.
+        template_name (str): The name of the template to use in the ruleset.
+        port (int): The port number to listen on.
+        protocol (str): The protocol to use (e.g., 'imtcp' for TCP, 'imudp' for UDP).
+        facilities_severities (str): A comma-separated list of facility.severity pairs.
+
+    Returns:
+        str: The generated rsyslog configuration.
+    """
+    config_lines = []
+
+    # Add module loading based on protocol
+    if protocol == 'tcp':
+        config_lines.append('module(load="imtcp")\n')
+    elif protocol == 'udp':
+        config_lines.append('module(load="imudp")\n')
+    else:
+        raise ValueError("Unsupported protocol. Use 'imtcp' or 'imudp'.")
+
+    # Process each facility.severity pair and aggregate them
+    facilities_severities_list = [fs.strip() for fs in facilities_severities.split(',') if fs.strip()]
+    facilities_severities_combined = ";".join(facilities_severities_list)
+    
+    # Add ruleset configuration
+    config_lines.append(f'ruleset(name="{ruleset_name}"){{')
+    config_lines.append(f'    {facilities_severities_combined} action(type="omfile" DynaFile="{template_name}")')
+    config_lines.append('}\n')
+
+    # Add input configuration
+    config_lines.append(f'input(type="im{protocol}" port="{port}" ruleset="{ruleset_name}")\n')
+
+    return "\n".join(config_lines)

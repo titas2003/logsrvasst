@@ -131,30 +131,3 @@ def create_rsyslog_ruleset(ruleset_name, template_name, port, protocol, faciliti
     config_lines.append(f'input(type="im{protocol}" port="{port}" ruleset="{ruleset_name}")\n')
 
     return "\n".join(config_lines)
-
-# if __name__ == "__main__":
-#     try:
-#         # Take user input
-#         ruleset_name = input("Enter the ruleset name: ").strip()
-#         template_name = input("Enter the template name: ").strip()
-#         port = int(input("Enter the port number: ").strip())
-#         protocol = input("Enter the protocol (imtcp or imudp): ").strip().lower()
-
-#         # Validate protocol
-#         if protocol not in ['tcp', 'udp']:
-#             raise ValueError("Invalid protocol. Please enter 'imtcp' or 'imudp'.")
-
-#         # Take user input for facilities.severities
-#         facilities_severities = input("Enter facilities.severities (comma-separated): ").strip()
-
-#         # Generate the rsyslog configuration
-#         rsyslog_config = create_rsyslog_ruleset(ruleset_name, template_name, port, protocol, facilities_severities)
-#         print("Generated rsyslog configuration:")
-#         print(rsyslog_config)
-
-#     except ValueError as e:
-#         print(f"Error: {e}")
-#     except Exception as e:
-#         print(f"An unexpected error occurred: {e}")
-# rsyslog_ruleset = create_rsyslog_ruleset('testRule', 'exampleTemplate', 514, 'tcp', "*.info,mail.crit")
-# print(rsyslog_ruleset)
