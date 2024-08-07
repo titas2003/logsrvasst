@@ -183,8 +183,8 @@ def create_tls_rsyslog_ruleset(ruleset_name, template_name, port, tls_ca, tls_ce
 
     return "\n".join(config_lines)
 
-def main():
-    print(create_tls_rsyslog_ruleset("Test_Rule","Test_template",514,"/etc/CA.pem","/etc/tls.pem","/etc/tls.key","local3.info,local4.*"))
+# def main():
+#     print(create_tls_rsyslog_ruleset("Test_Rule","Test_template",514,"/etc/CA.pem","/etc/tls.pem","/etc/tls.key","local3.info,local4.*"))
     
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()

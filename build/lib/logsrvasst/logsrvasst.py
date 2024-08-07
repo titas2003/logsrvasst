@@ -131,3 +131,60 @@ def create_rsyslog_ruleset(ruleset_name, template_name, port, protocol, faciliti
     config_lines.append(f'input(type="im{protocol}" port="{port}" ruleset="{ruleset_name}")\n')
 
     return "\n".join(config_lines)
+
+
+# ruleset to accept TLS encrypted logs
+
+def create_tls_rsyslog_ruleset(ruleset_name, template_name, port, tls_ca, tls_cert, tls_key, facilities_severities):
+    """
+    Create an rsyslog configuration string for TLS-encrypted logs in RainerScript format.
+    
+    Args:
+        ruleset_name (str): The name of the ruleset.
+        template_name (str): The name of the template to use in the ruleset.
+        port (int): The port number to listen on.
+        tls_cert (str): Path to the TLS certificate file.
+        tls_key (str): Path to the TLS private key file.
+        facilities_severities (str): A comma-separated list of facility.severity pairs.
+
+    Returns:
+        str: The generated rsyslog configuration in RainerScript format.
+    """
+    config_lines = []
+
+    # Global TLS settings
+    config_lines.append('global(')
+    config_lines.append(f'    DefaultNetstreamDriver="gtls"')
+    config_lines.append(f'    DefaultNetstreamDriverCAFile="{tls_ca}"')
+    config_lines.append(f'    DefaultNetstreamDriverCertFile="{tls_cert}"')
+    config_lines.append(f'    DefaultNetstreamDriverKeyFile="{tls_key}"')
+    config_lines.append(')\n')
+
+    # Load TCP listener module with TLS settings
+    config_lines.append('# load TCP listener')
+    config_lines.append('module(')
+    config_lines.append(f'    load="imtcp"')
+    config_lines.append(f'    StreamDriver.Name="gtls"')
+    config_lines.append(f'    StreamDriver.Mode="1"')
+    config_lines.append(f'    StreamDriver.Authmode="anon"')
+    config_lines.append(')\n')
+
+    # Input configuration
+    config_lines.append(f'# start up listener at port {port}')
+    config_lines.append('input(')
+    config_lines.append(f'    type="imtcp"')
+    config_lines.append(f'    port="{port}"')
+    config_lines.append(')\n')
+
+    # Ruleset configuration
+    config_lines.append(f'ruleset(name="{ruleset_name}") {{')
+    config_lines.append(f'    {facilities_severities} action(type="omfile" DynaFile="{template_name}")')
+    config_lines.append('}\n')
+
+    return "\n".join(config_lines)
+
+# def main():
+#     print(create_tls_rsyslog_ruleset("Test_Rule","Test_template",514,"/etc/CA.pem","/etc/tls.pem","/etc/tls.key","local3.info,local4.*"))
+    
+# if __name__ == "__main__":
+#     main()
