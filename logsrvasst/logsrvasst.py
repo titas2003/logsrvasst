@@ -175,10 +175,14 @@ def create_tls_rsyslog_ruleset(ruleset_name, template_name, port, tls_ca, tls_ce
     config_lines.append(f'    type="imtcp"')
     config_lines.append(f'    port="{port}"')
     config_lines.append(')\n')
+    
+    # Process each facility.severity pair and aggregate them
+    facilities_severities_list = [fs.strip() for fs in facilities_severities.split(',') if fs.strip()]
+    facilities_severities_combined = ";".join(facilities_severities_list)
 
     # Ruleset configuration
     config_lines.append(f'ruleset(name="{ruleset_name}") {{')
-    config_lines.append(f'    {facilities_severities} action(type="omfile" DynaFile="{template_name}")')
+    config_lines.append(f'    {facilities_severities_combined} action(type="omfile" DynaFile="{template_name}")')
     config_lines.append('}\n')
 
     return "\n".join(config_lines)

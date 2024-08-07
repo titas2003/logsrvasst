@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='logsrvasst',
-    version='0.1.6',
+    version='0.2.1',
     description='Generate server-side configuration for rsyslog',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',

@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: logsrvasst
-Version: 0.1.6
+Version: 0.2.1
 Summary: Generate server-side configuration for rsyslog
 Home-page: https://github.com/titas2003/logsrvasst.git
 Author: Titas Majumder
