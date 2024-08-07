@@ -221,6 +221,8 @@ This Python function generates a rsyslog ruleset configuration string based on u
 
 ### `create_rsyslog_ruleset(ruleset_name, template_name, port, protocol, facilities_severities)`
 
+### `create_tls_rsyslog_ruleset(ruleset_name, template_name, port, tls_ca, tls_cert, tls_key, facilities_severities)`
+
 Generates a rsyslog configuration string with the specified parameters.
 
 #### Parameters
@@ -230,6 +232,9 @@ Generates a rsyslog configuration string with the specified parameters.
 - **`port`** (`int`): The port number to listen on.
 - **`protocol`** (`str`): The protocol to use (`imtcp` for TCP or `imudp` for UDP).
 - **`facilities_severities`** (`str`): A comma-separated list of `facility.severity` pairs.
+- **`tls_ca`** (`str`): The TLS CA file path (`/etc/pki/certs/certificatesCA.pem`).
+- **`tls_cert`** (`str`): The TLS certificate path (`/etc/pki/certs/certificates.pem`).
+- **`tls_key`** (`str`): The TLS key path (`/etc/pki/certs/key.pem`).
 
 #### Returns
 
@@ -238,24 +243,14 @@ Generates a rsyslog configuration string with the specified parameters.
 #### Example Usage
 
 ```python
- rsyslog_config = create_rsyslog_ruleset(ruleset_name, template_name, port, protocol, facilities_severities)
+ rsyslog_config = create_rsyslog_ruleset(ruleset_name, template_name, port, protocol, facilities.severities)
         print(rsyslog_config)
 ```
 
-#### Output Example
-
-```plaintext
-Generated rsyslog configuration:
-module(load="imtcp")
-
-ruleset(name="testRule"){
-    mail.info;local3.warn action(type="omfile" DynaFile="testTemplate")
-}
-
-input(type="imtcp" port="514" ruleset="testRule")
+```python
+ rsyslog_tls_config = create_tls_rsyslog_ruleset(ruleset_name, template_name, port, tls_ca, tls_cert, tls_key, facilities.severities)
+        print(rsyslog_tls_config)
 ```
-
------
 
 # Overall usage of the entire package
 
@@ -288,6 +283,9 @@ print(rsyslog_template)
 # ruleset generator
 rsyslog_ruleset = create_rsyslog_ruleset('testRule', 'exampleTemplate', 514, 'protocol', '*.info,mail.crit')
 print(rsyslog_ruleset)
+# tls ruleset generator
+tls_ruleset = create_tls_rsyslog_ruleset("Test_Rule","Test_template",514,"/etc/CA.pem","/etc/tls.pem","/etc/tls.key","local3.info,local4.*")
+print(tls_ruleset)
 ```
 
 #### THANK YOU
